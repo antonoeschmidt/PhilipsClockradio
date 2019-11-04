@@ -22,8 +22,14 @@ public class StateSleeper extends StateAdapter {
     @Override
     public void onClick_Sleep(final ContextClockradio context) {
         chosenTime++;
+
         if (chosenTime > sleeperTime.size()-1) {
             chosenTime = 0;
+        }
+        if (!sleeperTime.get(chosenTime).equals("Off")) {
+            context.ui.turnOnLED(3);
+        } else {
+            context.ui.turnOffLED(3);
         }
         System.out.println("Sleeper sat to " + sleeperTime.get(chosenTime));
 
