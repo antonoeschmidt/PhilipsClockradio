@@ -1,13 +1,11 @@
 package dk.dtu.philipsclockradio;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class StateFM extends StateAdapter {
     private double frequency;
     private int currentChannel = 0;
-    private ArrayList autoChannels = new ArrayList<Double>() {
+    static ArrayList autoFMChannels = new ArrayList<Double>() {
         {
             add(91.5);
             add(93.0);
@@ -61,9 +59,9 @@ public class StateFM extends StateAdapter {
         //autotunes to previous station
         currentChannel--;
         if (currentChannel < 0) {
-            currentChannel = 4;
+            currentChannel = autoFMChannels.size()-1;
         }
-        frequency = (double) autoChannels.get(currentChannel);
+        frequency = (double) autoFMChannels.get(currentChannel);
         System.out.println("FM channel " + (currentChannel+1) +" at " + frequency + " MHz");
     }
 
@@ -71,10 +69,16 @@ public class StateFM extends StateAdapter {
     public void onLongClick_Min(ContextClockradio context) {
         //autotunes to next station
         currentChannel++;
-        if (currentChannel > 4) {
+        if (currentChannel > autoFMChannels.size()-1) {
             currentChannel = 0;
         }
-        frequency = (double) autoChannels.get(currentChannel);
+        frequency = (double) autoFMChannels.get(currentChannel);
         System.out.println("FM channel " + (currentChannel+1) +" at " + frequency + " MHz");
+    }
+
+    @Override
+    public void onLongClick_Preset(ContextClockradio context) {
+        context.setState(new StateSetRadioChannel(frequency,this));
+        context.ui.turnOnLEDBlink(1);
     }
 }

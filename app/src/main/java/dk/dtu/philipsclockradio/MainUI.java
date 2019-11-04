@@ -226,6 +226,40 @@ public class MainUI extends AppCompatActivity implements OnTouchListener {
         timeTextView.startAnimation(anim);
     }
 
+    public void turnOnLEDBlink(int LED) {
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(400);
+        anim.setStartOffset(20);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+
+        switch (LED) {
+            case 1:
+                circle1.startAnimation(anim);
+                break;
+            case 2:
+                circle2.startAnimation(anim);
+                break;
+            case 3:
+                circle3.startAnimation(anim);
+                break;
+            case 4:
+                circle4.startAnimation(anim);
+                break;
+            case 5:
+                circle5.startAnimation(anim);
+                break;
+        }
+    }
+
+    public void turnOffLEDBlink() {
+        circle1.clearAnimation();
+        circle2.clearAnimation();
+        circle3.clearAnimation();
+        circle4.clearAnimation();
+        circle5.clearAnimation();
+    }
+
     public void turnOffTextBlink(){
         timeTextView.clearAnimation();
     }

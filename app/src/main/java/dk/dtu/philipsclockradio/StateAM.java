@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class StateAM extends StateAdapter {
     private double frequency;
     private int currentChannel = 0;
-    private ArrayList autoChannels = new ArrayList<Double>() {
+    static ArrayList autoAMChannels = new ArrayList<Double>() {
         {
             add(91.5);
             add(93.0);
@@ -61,7 +61,7 @@ public class StateAM extends StateAdapter {
         if (currentChannel < 0) {
             currentChannel = 4;
         }
-        frequency = (double) autoChannels.get(currentChannel);
+        frequency = (double) autoAMChannels.get(currentChannel);
         System.out.println("AM channel " + (currentChannel+1) +" at " + frequency + " kHz");
     }
 
@@ -72,7 +72,13 @@ public class StateAM extends StateAdapter {
         if (currentChannel > 4) {
             currentChannel = 0;
         }
-        frequency = (double) autoChannels.get(currentChannel);
+        frequency = (double) autoAMChannels.get(currentChannel);
         System.out.println("AM channel " + (currentChannel+1) +" at " + frequency + " kHz");
+    }
+
+    @Override
+    public void onLongClick_Preset(ContextClockradio context) {
+        context.setState(new StateSetRadioChannel(frequency,this));
+        context.ui.turnOnLEDBlink(4);
     }
 }

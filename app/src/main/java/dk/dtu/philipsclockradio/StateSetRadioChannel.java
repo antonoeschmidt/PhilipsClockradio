@@ -2,81 +2,87 @@ package dk.dtu.philipsclockradio;
 
 import java.util.ArrayList;
 
+import javax.xml.transform.Source;
+
 public class StateSetRadioChannel extends StateAdapter {
 
     private double frequency;
+    private State previousState;
     private int currentChannel = 0;
-    private ArrayList autoChannels = new ArrayList<Double>() {
-        {
-            add(91.5);
-            add(93.0);
-            add(98.5);
-            add(102.5);
-            add(107.0);
-        }
-    };
 
-    public StateSetRadioChannel(double frequency) {
+    public StateSetRadioChannel(double frequency, State previousState) {
         this.frequency = frequency;
+        this.previousState = previousState;
     }
 
 
     @Override
     public void onClick_Hour(ContextClockradio context) {
-        //change FM frequency up
-        frequency -= 0.5;
-        if (frequency < 88) {
-            frequency = 108;
+        currentChannel--;
+
+        if (previousState.getClass().equals(StateFM.class)) {
+            if (currentChannel < 0) {
+                currentChannel = StateFM.autoFMChannels.size();
+                System.out.println("New channel selected at " + (currentChannel + 1));
+            } else {
+                System.out.println("Selected channel " + (currentChannel+1));
+            }
+        } else if (previousState.getClass().equals(StateAM.class)) {
+            if (currentChannel < 0) {
+                currentChannel = StateAM.autoAMChannels.size();
+                System.out.println("New channel selected at " + (currentChannel + 1));
+            } else {
+                System.out.println("Selected channel " + (currentChannel+1));
+            }
         }
-        System.out.println("Current FM frequency: " + frequency + " MHz");
+
+
+
     }
 
     @Override
     public void onClick_Min(ContextClockradio context) {
-        //change FM frequency down
-        frequency += 0.5;
-        if (frequency > 108) {
-            frequency = 88;
-        }
-        System.out.println("Current FM frequency: " + frequency + " MHz");
-    }
-
-
-
-    @Override
-    public void onClick_Power(ContextClockradio context) {
-        //setState AM
-        context.setState(new StateAM());
-        context.ui.turnOffLED(1);
-        context.ui.turnOnLED(4);
-    }
-
-    @Override
-    public void onLongClick_Power(ContextClockradio context) {
-        //setState Standby
-        context.setState(new StateStandby(context.getTime()));
-        context.ui.turnOffLED(1);
-    }
-
-    @Override
-    public void onLongClick_Hour(ContextClockradio context) {
-        //autotunes to previous station
-        currentChannel--;
-        if (currentChannel < 0) {
-            currentChannel = 4;
-        }
-        frequency = (double) autoChannels.get(currentChannel);
-        System.out.println("FM channel " + (currentChannel+1) +" at " + frequency + " MHz");
-    }
-
-    @Override
-    public void onLongClick_Min(ContextClockradio context) {
-        //autotunes to next station
         currentChannel++;
-        if (currentChannel > 4) {
-            currentChannel = 0;
+
+        if (previousState.getClass().equals(StateFM.class)) {
+            if (currentChannel > StateFM.autoFMChannels.size()) {
+                currentChannel = 0;
+                System.out.println("Selected channel " + (currentChannel+1));
+            } else if (currentChannel == StateFM.autoFMChannels.size()) {
+                System.out.println("New channel selected at " + (currentChannel + 1));
+            } else {
+                System.out.println("Selected channel " + (currentChannel+1));
+            }
+        } else if (previousState.getClass().equals(StateAM.class)) {
+            if (currentChannel > StateAM.autoAMChannels.size()) {
+                currentChannel = 0;
+                System.out.println("Selected channel " + (currentChannel+1));
+            } else if (currentChannel == StateAM.autoAMChannels.size()) {
+                System.out.println("New channel selected at " + (currentChannel + 1));
+            } else {
+                System.out.println("Selected channel " + (currentChannel+1));
+            }
         }
-        frequency = (double) autoChannels.get(currentChannel);
-        System.out.println("FM channel " + (currentChannel+1) +" at " + frequency + " MHz");
+    }
+
+    @Override
+    public void onClick_Preset(ContextClockradio context) {
+        if (previousState.getClass().equals(StateFM.class)) {
+            if (currentChannel == StateFM.autoFMChannels.size()) {
+                StateFM.autoFMChannels.add(frequency);
+            } else {
+                StateFM.autoFMChannels.set(currentChannel, frequency);
+            }
+            System.out.println("Channel saved at " + (currentChannel+1));
+        } else if (previousState.getClass().equals(StateAM.class)) {
+            if (currentChannel == StateFM.autoFMChannels.size()) {
+                StateAM.autoAMChannels.add(frequency);
+            } else {
+                StateAM.autoAMChannels.set(currentChannel, frequency);
+            }
+            System.out.println("Channel saved at " + (currentChannel+1));
+        }
+        context.ui.turnOffLEDBlink();
+        context.setState(previousState);
     }
 }
