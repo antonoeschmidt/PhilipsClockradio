@@ -60,4 +60,10 @@ public class StateStandby extends StateAdapter {
         context.setState(new StateFM());
         context.ui.turnOnLED(1);
     }
+
+    @Override
+    public void onClick_Sleep(ContextClockradio context) {
+        context.setState(new StateSleeper());
+        context.ui.turnOnLED(3);
+    }
 }
