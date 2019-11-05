@@ -37,7 +37,10 @@ public class StateSleeper extends StateAdapter {
             runnable = new Runnable() {
                 public void run() {
                     context.setState(new StateStandby(context.getTime()));
-                    context.ui.turnOffLED(3);
+                    if (sleeperTime.get(chosenTime).equals("Off")) {
+                        context.ui.turnOffLED(3);
+                    }
+
                 }
             };
         }
