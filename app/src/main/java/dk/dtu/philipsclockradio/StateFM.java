@@ -20,6 +20,16 @@ public class StateFM extends StateAdapter {
     }
 
     @Override
+    public void onEnterState(ContextClockradio context) {
+        if (context.ui.isMusicPlaying()) {
+
+        } else {
+            context.ui.toggleRadioPlaying();
+        }
+
+    }
+
+    @Override
     public void onClick_Hour(ContextClockradio context) {
         //change FM frequency up
         frequency -= 0.5;

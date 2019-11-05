@@ -47,6 +47,11 @@ public class StateStandby extends StateAdapter {
         if(!context.isClockRunning){
             startClock();
         }
+
+        if (context.ui.isMusicPlaying()) {
+            context.ui.toggleRadioPlaying();
+        }
+
     }
 
     @Override

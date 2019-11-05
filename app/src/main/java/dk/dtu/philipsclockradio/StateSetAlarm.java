@@ -5,9 +5,9 @@ import java.util.Date;
 
 public class StateSetAlarm extends StateAdapter {
 
-    Date mTime;
-    Date alarm1;
-    Date alarm2;
+    private Date mTime;
+    private Date alarm1;
+    private Date alarm2;
 
     @Override
     public void onEnterState(ContextClockradio context) {
@@ -19,6 +19,7 @@ public class StateSetAlarm extends StateAdapter {
     @Override
     public void onClick_Hour(ContextClockradio context) {
         //Gets current timestamp (Date)
+
         mTime.setTime(mTime.getTime() + 3600000);
         context.updateDisplayTime();
 

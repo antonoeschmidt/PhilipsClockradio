@@ -22,7 +22,8 @@ public class MainUI extends AppCompatActivity implements OnTouchListener {
 
     private static ContextClockradio logik;
 
-    private boolean displayLed1, displayLed2, displayLed3, displayLed4, displayLed5, displayBlink, musicPlaying;
+    private boolean displayLed1, displayLed2, displayLed3, displayLed4,
+            displayLed5, displayBlink, musicPlaying;
     private boolean longclick = false;
     private View currentbtn;
 
@@ -292,4 +293,7 @@ public class MainUI extends AppCompatActivity implements OnTouchListener {
         return false;
     }
 
+    public boolean isMusicPlaying() {
+        return musicPlaying;
+    }
 }
