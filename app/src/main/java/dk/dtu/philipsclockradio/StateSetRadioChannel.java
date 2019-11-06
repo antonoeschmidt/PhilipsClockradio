@@ -82,7 +82,11 @@ public class StateSetRadioChannel extends StateAdapter {
             }
             System.out.println("Channel saved at " + (currentChannel+1));
         }
-        context.ui.turnOffLEDBlink();
         context.setState(previousState);
+    }
+
+    @Override
+    public void onExitState(ContextClockradio context) {
+        context.ui.turnOffLEDBlink();
     }
 }

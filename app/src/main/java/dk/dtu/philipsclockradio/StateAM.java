@@ -27,6 +27,7 @@ public class StateAM extends StateAdapter {
         } else {
             context.ui.toggleRadioPlaying();
         }
+        context.ui.turnOnLED(4);
 
     }
 
@@ -91,5 +92,10 @@ public class StateAM extends StateAdapter {
     public void onLongClick_Preset(ContextClockradio context) {
         context.setState(new StateSetRadioChannel(frequency,this));
         context.ui.turnOnLEDBlink(4);
+    }
+
+    @Override
+    public void onExitState(ContextClockradio context) {
+        context.ui.turnOffLED(4);
     }
 }

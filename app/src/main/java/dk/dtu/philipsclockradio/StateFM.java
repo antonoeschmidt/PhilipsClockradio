@@ -27,6 +27,7 @@ public class StateFM extends StateAdapter {
         } else {
             context.ui.toggleRadioPlaying();
         }
+        context.ui.turnOnLED(1);
 
     }
 
@@ -54,15 +55,12 @@ public class StateFM extends StateAdapter {
     public void onClick_Power(ContextClockradio context) {
         //setState AM
         context.setState(new StateAM());
-        context.ui.turnOffLED(1);
-        context.ui.turnOnLED(4);
     }
 
     @Override
     public void onLongClick_Power(ContextClockradio context) {
         //setState Standby
         context.setState(new StateStandby(context.getDate()));
-        context.ui.turnOffLED(1);
     }
 
     @Override
@@ -91,5 +89,10 @@ public class StateFM extends StateAdapter {
     public void onLongClick_Preset(ContextClockradio context) {
         context.setState(new StateSetRadioChannel(frequency,this));
         context.ui.turnOnLEDBlink(1);
+    }
+
+    @Override
+    public void onExitState(ContextClockradio context) {
+        context.ui.turnOffLED(1);
     }
 }
