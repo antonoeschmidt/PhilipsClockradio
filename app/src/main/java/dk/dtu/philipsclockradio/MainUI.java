@@ -148,7 +148,7 @@ public class MainUI extends AppCompatActivity implements OnTouchListener {
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         boolean[] bools = new boolean[] {displayLed1, displayLed2, displayLed3, displayLed4, displayLed5, displayBlink, musicPlaying};
-        savedInstanceState.putString("displayText", logik.getTime().toString().substring(10,16));
+        savedInstanceState.putString("displayText", logik.getDate().toString().substring(10,16));
         //savedInstanceState.putString("displayText", timeTextView.getText().toString());
         savedInstanceState.putBooleanArray("bools", bools);
         super.onSaveInstanceState(savedInstanceState);

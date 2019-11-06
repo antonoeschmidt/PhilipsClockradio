@@ -19,7 +19,7 @@ public class StateStandby extends StateAdapter {
         @Override
         public void run() {
             try {
-                long currentTime = mTime.getTime();
+                long currentTime = mContext.getDate().getTime();
                 mTime.setTime(currentTime + 60000);
                 mContext.setTime(mTime);
             } finally {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class StateFM extends StateAdapter {
     private double frequency;
     private int currentChannel = 0;
+    //pre-made radioChannels
     static ArrayList autoFMChannels = new ArrayList<Double>() {
         {
             add(91.5);
@@ -60,7 +61,7 @@ public class StateFM extends StateAdapter {
     @Override
     public void onLongClick_Power(ContextClockradio context) {
         //setState Standby
-        context.setState(new StateStandby(context.getTime()));
+        context.setState(new StateStandby(context.getDate()));
         context.ui.turnOffLED(1);
     }
 

@@ -3,7 +3,6 @@ package dk.dtu.philipsclockradio;
 import java.util.Calendar;
 import java.util.Date;
 
-//
 public class ContextClockradio {
     private State currentState;
     private Date mTime;
@@ -39,7 +38,12 @@ public class ContextClockradio {
     void setTime(Date time){
         mTime = time;
         if(currentState.getClass().getSimpleName().equals("StateStandby") ||
-                currentState.getClass().getSimpleName().equals("StateSetAlarm")){
+                currentState.getClass().getSimpleName().equals("StateSetAlarm") ||
+                currentState.getClass().getSimpleName().equals("StateFM") ||
+                currentState.getClass().getSimpleName().equals("StateAM") ||
+                currentState.getClass().getSimpleName().equals("StateSetRadioChannel") ||
+                currentState.getClass().getSimpleName().equals("StateAlarmPlaying"))
+        {
             updateDisplayTime();
         }
     }
@@ -53,7 +57,7 @@ public class ContextClockradio {
         ui.setDisplayText(mDisplayText);
     }
 
-    public Date getTime(){
+    public Date getDate(){
         return mTime;
     }
 

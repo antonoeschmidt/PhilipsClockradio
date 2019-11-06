@@ -10,7 +10,7 @@ public class StateSetTime extends StateAdapter {
 
     @Override
     public void onEnterState(ContextClockradio context) {
-        mTime = context.getTime();
+        mTime = context.getDate();
         context.ui.turnOnTextBlink();
         context.updateDisplayTime();
     }
@@ -38,7 +38,7 @@ public class StateSetTime extends StateAdapter {
 
     @Override
     public void onClick_Preset(ContextClockradio context) {
-        context.setState(new StateStandby(context.getTime()));
+        context.setState(new StateStandby(context.getDate()));
     }
 
 }
