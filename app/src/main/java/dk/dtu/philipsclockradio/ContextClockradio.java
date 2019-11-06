@@ -38,7 +38,8 @@ public class ContextClockradio {
     //Opdaterer kontekst time state og UI
     void setTime(Date time){
         mTime = time;
-        if(currentState.getClass().getSimpleName().equals("StateStandby")){
+        if(currentState.getClass().getSimpleName().equals("StateStandby") ||
+                currentState.getClass().getSimpleName().equals("StateSetAlarm")){
             updateDisplayTime();
         }
     }
